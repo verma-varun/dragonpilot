@@ -24,7 +24,8 @@ BUTTONS_DICT = {CruiseButtons.RES_ACCEL: ButtonType.accelCruise, CruiseButtons.D
 NON_LINEAR_TORQUE_PARAMS = {
   CAR.BOLT_EUV: [2.6531724862969748, 1.0, 0.1919764879840985, 0.009054123646805178],
   CAR.ACADIA: [4.78003305, 1.0, 0.3122, 0.05591772],
-  CAR.SILVERADO: [3.29974374, 1.0, 0.25571356, 0.0465122]
+  CAR.SILVERADO: [3.29974374, 1.0, 0.25571356, 0.0465122],
+  CAR.GMC_YUKON_2018: [3.29974374, 1.0, 0.25571356, 0.0465122]
 }
 
 
@@ -229,6 +230,19 @@ class CarInterface(CarInterfaceBase):
       CarInterfaceBase.configure_torque_tune(candidate, ret.lateralTuning)
 
     elif candidate == CAR.SILVERADO:
+      ret.mass = 2450.
+      ret.wheelbase = 3.75
+      ret.steerRatio = 16.3
+      ret.centerToFront = ret.wheelbase * 0.5
+      ret.tireStiffnessFactor = 1.0
+      # On the Bolt, the ECM and camera independently check that you are either above 5 kph or at a stop
+      # with foot on brake to allow engagement, but this platform only has that check in the camera.
+      # TODO: check if this is split by EV/ICE with more platforms in the future
+      if ret.openpilotLongitudinalControl:
+        ret.minEnableSpeed = -1.
+      CarInterfaceBase.configure_torque_tune(candidate, ret.lateralTuning)
+
+    elif candidate == CAR.GMC_YUKON_2018:
       ret.mass = 2450.
       ret.wheelbase = 3.75
       ret.steerRatio = 16.3
