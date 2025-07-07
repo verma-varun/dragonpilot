@@ -228,7 +228,8 @@ class CarInterface(CarInterfaceBase):
       ret.steerActuatorDelay = 0.2
       CarInterfaceBase.configure_torque_tune(candidate, ret.lateralTuning)
 
-    elif candidate == CAR.SILVERADO:
+    # elif candidate == CAR.SILVERADO:
+    elif "SILVERADO" in candidate:
       ret.openpilotLongitudinalControl = False   # steer-only, no auto gas/brake
       ret.mass = 2450.
       ret.wheelbase = 3.75
