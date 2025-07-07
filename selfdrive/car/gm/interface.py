@@ -230,7 +230,6 @@ class CarInterface(CarInterfaceBase):
 
     elif candidate == CAR.SILVERADO:
       ret.openpilotLongitudinalControl = False   # steer-only, no auto gas/brake
-      ret.pcmCruise = False
       ret.mass = 2450.
       ret.wheelbase = 3.75
       ret.steerRatio = 16.3
@@ -243,6 +242,7 @@ class CarInterface(CarInterfaceBase):
       if ret.openpilotLongitudinalControl:
         ret.minEnableSpeed = -1.
       CarInterfaceBase.configure_torque_tune(candidate, ret.lateralTuning)
+      ret.pcmCruise = False
 
     elif candidate == CAR.EQUINOX:
       ret.mass = 3500. * CV.LB_TO_KG
